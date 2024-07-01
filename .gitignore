@@ -1,0 +1,37 @@
+# OS X
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.hmap
+*.ipa
+profile
+*.moved-aside
+*.xccheckout
+*.xcscmblueprint
+!project.pbxproj
+
+# Bundler
+.bundle
+
+# CocoaPods
+Pods
+Podfile.lock
+
+# SPM (Swift Package Manager)
+Packages/
+Package.resolved
+Package.pins
+.swiftpm/
+.build/
