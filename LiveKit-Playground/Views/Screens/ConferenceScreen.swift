@@ -27,9 +27,11 @@ struct ConferenceScreen: View {
             }
             
             VStack {
-                Toggle("Enable Audio", isOn: $viewModel.isMicrophoneEnabled)
+                Toggle("Camera", isOn: $viewModel.isCameraEnabled)
+                    .disabled(viewModel.isCameraSwitchingInProgress)
                 
-                Toggle("Enable Video", isOn: $viewModel.isCameraEnabled)
+                Toggle("Microphone", isOn: $viewModel.isMicrophoneEnabled)
+                    .disabled(viewModel.isMicrophoneSwitchingInProgress)
             }
             .padding(.horizontal)
             

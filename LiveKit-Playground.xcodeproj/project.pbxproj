@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0646027F2C341820005CDC60 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0646027E2C341820005CDC60 /* Utils.swift */; };
 		06E0F8DB2C2D4BA9008FEA40 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E0F8DA2C2D4BA9008FEA40 /* Application.swift */; };
 		06E0F8DD2C2D4BA9008FEA40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06E0F8DC2C2D4BA9008FEA40 /* ContentView.swift */; };
 		06E0F8DF2C2D4BAB008FEA40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06E0F8DE2C2D4BAB008FEA40 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0646027E2C341820005CDC60 /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		06E0F8D72C2D4BA9008FEA40 /* LiveKit-Playground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LiveKit-Playground.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		06E0F8DA2C2D4BA9008FEA40 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
 		06E0F8DC2C2D4BA9008FEA40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -47,6 +49,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0646027D2C34180C005CDC60 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				06E0F8F82C2D8C86008FEA40 /* Constants.swift */,
+				0646027E2C341820005CDC60 /* Utils.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		068C3CD82C2ED9020054B989 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,9 +86,9 @@
 		06E0F8D92C2D4BA9008FEA40 /* LiveKit-Playground */ = {
 			isa = PBXGroup;
 			children = (
+				0646027D2C34180C005CDC60 /* Utils */,
 				06E0F8DC2C2D4BA9008FEA40 /* ContentView.swift */,
 				06E0F8DA2C2D4BA9008FEA40 /* Application.swift */,
-				06E0F8F82C2D8C86008FEA40 /* Constants.swift */,
 				06E0F8F02C2D5CEF008FEA40 /* ViewModel */,
 				06E0F8E82C2D564D008FEA40 /* Views */,
 				06E0F8DE2C2D4BAB008FEA40 /* Assets.xcassets */,
@@ -199,6 +210,7 @@
 			files = (
 				06E0F8DD2C2D4BA9008FEA40 /* ContentView.swift in Sources */,
 				06E0F8F42C2D6271008FEA40 /* ProgressOverlay.swift in Sources */,
+				0646027F2C341820005CDC60 /* Utils.swift in Sources */,
 				06E0F8EC2C2D5726008FEA40 /* ConferenceScreen.swift in Sources */,
 				06E0F8F72C2D7EC0008FEA40 /* ConferenceScreenViewModel.swift in Sources */,
 				06E0F8DB2C2D4BA9008FEA40 /* Application.swift in Sources */,

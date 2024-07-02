@@ -15,6 +15,9 @@ final class ConferenceScreenViewModel: ObservableObject {
     @Published var isMicrophoneEnabled: Bool
     @Published var isCameraEnabled: Bool
     
+    @Published var isMicrophoneSwitchingInProgress: Bool = false
+    @Published var isCameraSwitchingInProgress: Bool = false
+    
     @Published private(set) var localParticipantInfo: ParticipantInfo
     @Published private(set) var remoteParticipantsInfos: [ParticipantInfo] = []
     @Published private(set) var selectedParticipantInfo: ParticipantInfo?
@@ -132,6 +135,17 @@ final class ConferenceScreenViewModel: ObservableObject {
     
     private func setMicrophone(enabled: Bool) async {
         
+        guard 
+            !isMicrophoneSwitchingInProgress,
+            localParticipant.isMicrophoneEnabled() != enabled
+        else {
+            return
+        }
+        
+        await MainActor.run {
+            isMicrophoneSwitchingInProgress = true
+        }
+        
         do {
             if enabled {
                 let audioTrack = LocalAudioTrack.createTrack()
@@ -139,7 +153,7 @@ final class ConferenceScreenViewModel: ObservableObject {
             } else {
                 
                 guard let microphonePublication = self.localParticipant.firstAudioPublication as? LocalTrackPublication else {
-                    return
+                    throw "Invalid audio publication"
                 }
                 
                 try await self.localParticipant.unpublish(publication: microphonePublication)
@@ -147,9 +161,24 @@ final class ConferenceScreenViewModel: ObservableObject {
         } catch {
             print("Error while tying to switch microphone \(isMicrophoneEnabled ? "on" : "off"): \(error)")
         }
+        
+        await MainActor.run {
+            isMicrophoneSwitchingInProgress = false
+        }
     }
     
     private func setCamera(enabled: Bool) async {
+        
+        guard 
+            !isCameraSwitchingInProgress,
+            localParticipant.isCameraEnabled() != enabled
+        else {
+            return
+        }
+        
+        await MainActor.run {
+            isCameraSwitchingInProgress = true
+        }
         
         do {
             if enabled {
@@ -158,13 +187,17 @@ final class ConferenceScreenViewModel: ObservableObject {
             } else {
                 
                 guard let cameraPublication = self.localParticipant.firstCameraPublication as? LocalTrackPublication else {
-                    return
+                    throw "Invalid camera publication"
                 }
                 
                 try await self.localParticipant.unpublish(publication: cameraPublication)
             }
         } catch {
             print("Error while tying to switch camera \(isMicrophoneEnabled ? "on" : "off"): \(error)")
+        }
+        
+        await MainActor.run {
+            isCameraSwitchingInProgress = false
         }
     }
     
