@@ -26,13 +26,21 @@ final class ConnectScreenViewModel: ObservableObject {
     }()
     
     private var roomOptions: RoomOptions = {
-        RoomOptions(
-            defaultCameraCaptureOptions: CameraCaptureOptions(dimensions: .h1080_169),
-            defaultScreenShareCaptureOptions: ScreenShareCaptureOptions(dimensions: .h1080_169),
-            defaultVideoPublishOptions: VideoPublishOptions(simulcast: false),
+        let cameraCaptureOptions = CameraCaptureOptions()
+        let audioCaptureOptions = AudioCaptureOptions()
+        let videoPublishOptions = VideoPublishOptions(encoding: VideoEncoding(maxBitrate: 2_000_000, maxFps: 30),
+                                                      simulcast: false,
+                                                      preferredCodec: VideoCodec.vp8)
+        let audioPublishOptions = AudioPublishOptions()
+        
+        return RoomOptions(
+            defaultCameraCaptureOptions: cameraCaptureOptions,
+            defaultAudioCaptureOptions: audioCaptureOptions,
+            defaultVideoPublishOptions: videoPublishOptions,
+            defaultAudioPublishOptions: audioPublishOptions,
             adaptiveStream: false,
             dynacast: false,
-            reportRemoteTrackStatistics: false
+            reportRemoteTrackStatistics: true
         )
     }()
     
