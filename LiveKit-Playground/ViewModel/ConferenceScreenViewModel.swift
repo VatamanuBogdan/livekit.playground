@@ -91,23 +91,16 @@ final class ConferenceScreenViewModel: ObservableObject {
         
         $isMicrophoneEnabled.sink { [weak self] isMicrophoneEnabled in
             
-            guard let self else {
-                return
-            }
-            
-            Task { @MainActor [self]  in
-                try? await self.localParticipant.setMicrophone(enabled: isMicrophoneEnabled)
+            Task { @MainActor in
+                await self?.setMicrophone(enabled: isMicrophoneEnabled)
+       
             }
         }.store(in: &cancellables)
         
         $isCameraEnabled.sink { [weak self] isCameraEnabled in
             
-            guard let self else {
-                return
-            }
-            
-            Task { @MainActor [self]  in
-                try? await self.localParticipant.setCamera(enabled: isCameraEnabled)
+            Task { @MainActor in
+                await self?.setCamera(enabled: isCameraEnabled)
             }
         }.store(in: &cancellables)
     }
@@ -132,6 +125,46 @@ final class ConferenceScreenViewModel: ObservableObject {
                 }
             }
             
+        }
+    }
+    
+    // MARK: - Media Control
+    
+    private func setMicrophone(enabled: Bool) async {
+        
+        do {
+            if enabled {
+                let audioTrack = LocalAudioTrack.createTrack()
+                try await localParticipant.publish(audioTrack: audioTrack)
+            } else {
+                
+                guard let microphonePublication = self.localParticipant.firstAudioPublication as? LocalTrackPublication else {
+                    return
+                }
+                
+                try await self.localParticipant.unpublish(publication: microphonePublication)
+            }
+        } catch {
+            print("Error while tying to switch microphone \(isMicrophoneEnabled ? "on" : "off"): \(error)")
+        }
+    }
+    
+    private func setCamera(enabled: Bool) async {
+        
+        do {
+            if enabled {
+                let videoTrack = LocalVideoTrack.createCameraTrack()
+                try await localParticipant.publish(videoTrack: videoTrack)
+            } else {
+                
+                guard let cameraPublication = self.localParticipant.firstCameraPublication as? LocalTrackPublication else {
+                    return
+                }
+                
+                try await self.localParticipant.unpublish(publication: cameraPublication)
+            }
+        } catch {
+            print("Error while tying to switch camera \(isMicrophoneEnabled ? "on" : "off"): \(error)")
         }
     }
     
